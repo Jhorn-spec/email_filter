@@ -23,13 +23,17 @@ if file1 and file2:
         st.write("Clean Emails (Sheet 2):")
         st.dataframe(clean_emails_df)
 
+        # Normalize column names
+        bad_emails_df.columns = bad_emails_df.columns.str.strip().str.lower()
+        clean_emails_df.columns = clean_emails_df.columns.str.strip().str.lower()
+
         # Ensure the 'Email' column exists in both files
-        if "Email" not in bad_emails_df.columns or "Email" not in clean_emails_df.columns:
+        if "email" not in bad_emails_df.columns or "email" not in clean_emails_df.columns:
             st.error("Both sheets must have an 'Email' column.")
         else:
             # Filter clean emails
             filtered_emails_df = clean_emails_df[
-                ~clean_emails_df["Email"].str.lower().isin(bad_emails_df["Email"].str.lower())
+                ~clean_emails_df["email"].str.lower().isin(bad_emails_df["email"].str.lower())
             ]
 
             st.subheader("Filtered Emails")
